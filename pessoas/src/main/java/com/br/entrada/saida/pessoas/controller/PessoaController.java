@@ -95,13 +95,15 @@ public class PessoaController {
     public String salvarSaida(@PathVariable String id, @RequestParam("horaSaida") String horaSaida) {
         Pessoa pessoa = pessoaRepository.findById(id).orElse(null); // Busca a pessoa pelo ID
         if (pessoa != null) { // Verifica se a pessoa existe
-            try {
-                LocalDateTime dateTime = LocalDateTime.parse(horaSaida); // Tenta parsear a hora de saída
-                pessoa.setHoraSaida(dateTime); // Define a hora de saída da pessoa
-                pessoaRepository.save(pessoa); // Salva a pessoa no repositório
-            } catch (DateTimeParseException e) { // Captura exceções de parsing de data/hora
-                e.printStackTrace(); // Imprime o stack trace da exceção
-            }
+        	if (pessoa.getHoraSaida() == null) {
+	            try {
+	                LocalDateTime dateTime = LocalDateTime.parse(horaSaida); // Tenta parsear a hora de saída
+	                pessoa.setHoraSaida(dateTime); // Define a hora de saída da pessoa
+	                pessoaRepository.save(pessoa); // Salva a pessoa no repositório
+	            } catch (DateTimeParseException e) { // Captura exceções de parsing de data/hora
+	                e.printStackTrace(); // Imprime o stack trace da exceção
+	            }
+	         }
         }
         return "redirect:/pessoas"; // Redireciona para a lista de pessoas
     }
