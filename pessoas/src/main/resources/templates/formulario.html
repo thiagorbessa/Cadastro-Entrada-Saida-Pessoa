@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width"/>
     <title>Cadastrar entrada</title>
     <link rel="stylesheet" th:href="@{/css/estilo.css}" />
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -59,7 +64,15 @@
                     
                     <div>
                         <label>Paciente:</label>
-                        <input th:field="*{paciente}"/>
+                        <select th:field="*{paciente}" onchange="showHidePacienteNome(this)">
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
+                    </div>
+                    
+                    <div id="nomePaciente" class="hidden">
+                        <label for="pacienteNome">Digite o nome do paciente:</label>
+                        <input type="text" th:field="*{paciente}" id="pacienteNome" />
                     </div>
                     
                     <div>
@@ -80,6 +93,18 @@
                 const form = document.querySelector('form');
                 form.reset();
             });
+
+            function showHidePacienteNome(select) {
+                const pacienteNomeDiv = document.getElementById('nomePaciente');
+                if (select.value === 'Não') {
+                    pacienteNomeDiv.classList.remove('hidden');
+                } else {
+                    pacienteNomeDiv.classList.add('hidden');
+                }
+            }
+
+            // Chamada inicial para verificar estado ao carregar a página
+            showHidePacienteNome(document.querySelector('select[name="paciente"]'));
         </script>
     </main>
 </body>

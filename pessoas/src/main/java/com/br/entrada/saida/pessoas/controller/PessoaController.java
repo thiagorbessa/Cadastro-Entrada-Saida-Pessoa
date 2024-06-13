@@ -95,7 +95,7 @@ public class PessoaController {
     public String salvarSaida(@PathVariable String id, @RequestParam("horaSaida") String horaSaida) {
         Pessoa pessoa = pessoaRepository.findById(id).orElse(null); // Busca a pessoa pelo ID
         if (pessoa != null) { // Verifica se a pessoa existe
-        	if(pessoa.getHoraSaida().equals("")) {
+        	if(pessoa.getHoraSaida().equals("")) {//verifica se horaSaida nao tem valor, se nao tiver acrescenta, se tiver mantem o mesmo valor
             try {
                 LocalDateTime dateTime = LocalDateTime.parse(horaSaida); // Tenta parsear a hora de saída
                 pessoa.setHoraSaida(dateTime); // Define a hora de saída da pessoa
