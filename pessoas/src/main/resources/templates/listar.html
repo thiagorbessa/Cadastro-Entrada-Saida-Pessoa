@@ -1,64 +1,67 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" 
-    xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width"/>
     <title>Listar</title>
-    <link rel="stylesheet" th:href="@{/css/estilo.css}" />
+    <link rel="stylesheet" th:href="@{/css/estilo.css}" /> <!-- Importação do arquivo de estilo CSS -->
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a th:href="@{/}">Entrada e saída</a></li>
-                <li><a th:href="@{/pessoas}">Listar</a></li>
-                <li><a th:href="@{/pessoas/novo}">Novo</a></li>
+                <li><a th:href="@{/}">Entrada e saída</a></li> <!-- Link para a página inicial -->
+                <li><a th:href="@{/pessoas}">Listar</a></li> <!-- Link para listar pessoas (página atual) -->
+                <li><a th:href="@{/pessoas/novo}">Novo</a></li> <!-- Link para cadastrar nova pessoa -->
             </ul>
         </nav>
     </header>
     <main>
         <section>
-            <h1>Lista Pessoas</h1>
+            <h1>Lista Pessoas</h1> <!-- Título da seção -->
         </section>
         <section>
             <table>
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Telefone</th>
-                        <th>Unidade</th>
-                        <th>Setor</th>
-                        <th>Andar</th>
-                        <th>Paciente</th>
-                        <th>Hora Entrada</th>
-                        <th>Hora Saída</th>
-                        <th>Observação</th>
-                        <th>Editar</th>
-                        <th>Cadastrar Saída</th>
-                        <th>Remover</th>
+                        <th>Nome</th> <!-- Cabeçalho da coluna Nome -->
+                        <th>Telefone</th> <!-- Cabeçalho da coluna Telefone -->
+                        <th>Unidade</th> <!-- Cabeçalho da coluna Unidade -->
+                        <th>Setor</th> <!-- Cabeçalho da coluna Setor -->
+                        <th>Andar</th> <!-- Cabeçalho da coluna Andar -->
+                        <th>Paciente</th> <!-- Cabeçalho da coluna Paciente -->
+                        <th>Hora Entrada</th> <!-- Cabeçalho da coluna Hora Entrada -->
+                        <th>Hora Saída</th> <!-- Cabeçalho da coluna Hora Saída -->
+                        <th>Observação</th> <!-- Cabeçalho da coluna Observação -->
+                        <th>Editar</th> <!-- Cabeçalho da coluna Editar -->
+                        <th>Cadastrar Saída</th> <!-- Cabeçalho da coluna Cadastrar Saída -->
+                        <th>Remover</th> <!-- Cabeçalho da coluna Remover -->
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Loop sobre a lista de pessoas (variável 'pessoas' vinda do controller) -->
                     <tr th:each="pessoa : ${pessoas}">
-                        <td th:text="${pessoa.nome}"></td>
-                        <td th:text="${pessoa.telefone}"></td>
-                        <td th:text="${pessoa.unidade}"></td>
-                        <td th:text="${pessoa.setor}"></td>
-                        <td th:text="${pessoa.andar}"></td>
-                        <td th:text="${pessoa.paciente}"></td>
-                        <td th:text="${pessoa.horaEntrada}"></td>
-                        <td th:text="${pessoa.horaSaida}"></td>
-                        <td th:text="${pessoa.observacao}"></td>
+                        <td th:text="${pessoa.nome}"></td> <!-- Célula com o nome da pessoa -->
+                        <td th:text="${pessoa.telefone}"></td> <!-- Célula com o telefone da pessoa -->
+                        <td th:text="${pessoa.unidade}"></td> <!-- Célula com a unidade da pessoa -->
+                        <td th:text="${pessoa.setor}"></td> <!-- Célula com o setor da pessoa -->
+                        <td th:text="${pessoa.andar}"></td> <!-- Célula com o andar da pessoa -->
+                        <td th:text="${pessoa.paciente}"></td> <!-- Célula com informação se é paciente -->
+                        <td th:text="${pessoa.horaEntrada}"></td> <!-- Célula com a hora de entrada -->
+                        <td th:text="${pessoa.horaSaida}"></td> <!-- Célula com a hora de saída -->
+                        <td th:text="${pessoa.observacao}"></td> <!-- Célula com a observação -->
                         <td>
+                            <!-- Link para editar pessoa -->
                             <a th:href="@{/pessoas/{id}/editar(id=${pessoa.id})}">Editar</a>
                         </td>
                         <td>
+                            <!-- Link para cadastrar saída da pessoa -->
                             <a th:href="@{/pessoas/{id}/formularioSaida(id=${pessoa.id})}">Cadastrar Saída</a>
                         </td>
                         <td>
+                            <!-- Formulário para remover pessoa -->
                             <form th:action="@{/pessoas/{id}(id=${pessoa.id})}" th:method="delete">
-                                <button type="submit">Remover</button>
+                                <button type="submit">Remover</button> <!-- Botão para enviar o formulário -->
                             </form>
                         </td>
                     </tr>
