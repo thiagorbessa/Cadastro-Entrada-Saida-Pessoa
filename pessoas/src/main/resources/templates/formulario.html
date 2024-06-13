@@ -59,7 +59,11 @@
                     
                     <div>
                         <label>Paciente:</label>
-                        <input th:field="*{paciente}"/>
+                        <select th:field="*{paciente}" required>
+						    <option value="" disabled selected>Escolha uma resposta</option>
+						    <option value="Sim">Sim</option>
+						    <option value="Não">Não</option>
+						</select>
                     </div>
                     
                     <div>
