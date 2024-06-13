@@ -9,6 +9,9 @@
         .hidden {
             display: none;
         }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -26,86 +29,85 @@
             <h1>Cadastro de Pessoas</h1>
         </section>
         <section>
-            <section>
-                <form th:action="${pessoa.id == null} ? @{/pessoas} : @{/pessoas/{pessoa.id}(id=${pessoa.id})}"
-                      th:object="${pessoa}"
-                      method="post">
-                    <input type="hidden" th:if="${pessoa.id != null}" name="_method" value="put" />
-                    
-                    <div th:if="${pessoa.id != null}">
-                        <label>Código: </label>
-                        <input th:field="*{id}" readonly="readonly" />
-                    </div>
-                    
-                    <div>
-                        <label>Nome: </label> 
-                        <input th:field="*{nome}" />
-                    </div>
-                    
-                    <div>
-                        <label>Telefone: </label> 
-                        <input th:field="*{telefone}"/>
-                    </div>
-                    
-                    <div>
-                        <label>Unidade:</label>
-                        <input th:field="*{unidade}"/>
-                    </div>
-                    
-                    <div>
-                        <label>Setor:</label>
-                        <input th:field="*{setor}"/>
-                    </div>
-                    
-                    <div>
-                        <label>Andar:</label>
-                        <input th:field="*{andar}"/>
-                    </div>
-                    
-                    <div>
-                        <label>Paciente:</label>
-                        <select th:field="*{paciente}" onchange="showHidePacienteNome(this)">
-                            <option value="Sim">Sim</option>
-                            <option value="Não">Não</option>
-                        </select>
-                    </div>
-                    
-                    <div id="nomePaciente" class="hidden">
-                        <label for="pacienteNome">Digite o nome do paciente:</label>
-                        <input type="text" th:field="*{paciente}" id="pacienteNome" />
-                    </div>
-                    
-                    <div>
-                        <label for="observacao">Observação:</label>
-                        <textarea th:field="*{observacao}" rows="4" cols="50"></textarea>
-                    </div>
-                    
-                    <div>
-                        <button type="submit">Salvar</button>
-                        <button type="button" id="limpar">Limpar</button>
-                    </div>
-                </form>
-            </section>
+            <form th:action="${pessoa.id == null} ? @{/pessoas} : @{/pessoas/{pessoa.id}(id=${pessoa.id})}"
+                  th:object="${pessoa}"
+                  method="post">
+                <input type="hidden" th:if="${pessoa.id != null}" name="_method" value="put" />
+                
+                <div th:if="${pessoa.id != null}">
+                    <label>Código: </label>
+                    <input th:field="*{id}" readonly="readonly" />
+                </div>
+                
+                <div>
+                    <label>Nome: <span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span></label>
+                    <input th:field="*{nome}" required="required"/>
+                </div>
+                
+                <div>
+                    <label>Telefone: <span class="error" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></span></label>
+                    <input th:field="*{telefone}" required="required"/>
+                </div>
+                
+                <div>
+                    <label>Unidade: <span class="error" th:if="${#fields.hasErrors('unidade')}" th:errors="*{unidade}"></span></label>
+                    <input th:field="*{unidade}" required="required"/>
+                </div>
+                
+                <div>
+                    <label>Setor: <span class="error" th:if="${#fields.hasErrors('setor')}" th:errors="*{setor}"></span></label>
+                    <input th:field="*{setor}" required="required"/>
+                </div>
+                
+                <div>
+                    <label>Andar: <span class="error" th:if="${#fields.hasErrors('andar')}" th:errors="*{andar}"></span></label>
+                    <input th:field="*{andar}" required="required"/>
+                </div>
+                
+                <div>
+                    <label>Paciente:</label>
+                    <select th:field="*{paciente}" onchange="showHidePacienteNome(this)">
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                    </select>
+                </div>
+                
+                <div id="nomePaciente" class="hidden">
+                    <label for="pacienteNome">Digite o nome do paciente: <span class="error" th:if="${#fields.hasErrors('paciente')}" th:errors="*{paciente}"></span></label>
+                    <input type="text" th:field="*{paciente}" id="pacienteNome" required="required" />
+                </div>
+                
+                <div>
+                    <label for="observacao">Observação:</label>
+                    <textarea th:field="*{observacao}" rows="4" cols="50"></textarea>
+                </div>
+                
+                <div>
+                    <button type="submit">Salvar</button>
+                    <button type="button" id="limpar">Limpar</button>
+                </div>
+            </form>
         </section>
-        <script>
-            const limparButton = document.getElementById('limpar');
-            limparButton.addEventListener('click', function() {
-                const form = document.querySelector('form');
-                form.reset();
-            });
-
-            function showHidePacienteNome(select) {
-                const pacienteNomeDiv = document.getElementById('nomePaciente');
-                if (select.value === 'Não') {
-                    pacienteNomeDiv.classList.remove('hidden');
-                } else {
-                    pacienteNomeDiv.classList.add('hidden');
-                }
-            }
-
-            // Chamada inicial para verificar estado ao carregar a página
-            showHidePacienteNome(document.querySelector('select[name="paciente"]'));
-        </script>
     </main>
+
+    <script>
+        const limparButton = document.getElementById('limpar');
+        limparButton.addEventListener('click', function() {
+            const form = document.querySelector('form');
+            form.reset();
+        });
+
+        function showHidePacienteNome(select) {
+            const pacienteNomeDiv = document.getElementById('nomePaciente');
+            if (select.value === 'Não') {
+                pacienteNomeDiv.classList.remove('hidden');
+            } else {
+                pacienteNomeDiv.classList.add('hidden');
+            }
+        }
+
+        // Chamada inicial para verificar estado ao carregar a página
+        showHidePacienteNome(document.querySelector('select[name="paciente"]'));
+    </script>
 </body>
 </html>

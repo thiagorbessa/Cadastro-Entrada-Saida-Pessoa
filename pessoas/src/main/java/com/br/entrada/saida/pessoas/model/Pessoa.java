@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity(name= "tb_person")
 public class Pessoa {
@@ -12,14 +14,25 @@ public class Pessoa {
 	@Id
 	private String id;
 	
+	@NotBlank(message = "O campo Nome é obrigatório")
     private String nome;
+    
+    @NotBlank(message = "O campo Telefone é obrigatório")
     private String telefone;
+    
+    @NotBlank(message = "O campo Unidade é obrigatório")
     private String unidade;
+    
+    @NotBlank(message = "O campo Setor é obrigatório")
     private String setor;
+    
+    @NotBlank(message = "O campo Andar é obrigatório")
     private String andar;
     
-    
+    @NotBlank(message = "Escolher uma resposta é obrigatório.")
+    @Pattern(regexp = "Sim|Não - .+|Sim", message = "A resposta deve ser 'Sim' ou 'Não - [Nome do Paciente]'.")
     private String paciente;
+    
     private String horaEntrada;
     private String horaSaida;
     private String observacao;

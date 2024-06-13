@@ -6,6 +6,15 @@
     <title>Editar Pessoa</title>
     <link rel="stylesheet" th:href="@{/css/estilo.css}" />
     
+    <!-- Estilo para campos inválidos -->
+    <style>
+        .campo-invalido {
+            border: 1px solid red; /* Estilo de borda vermelha para indicar campo inválido */
+        }
+        .erro-validacao {
+            color: red; /* Cor vermelha para mensagens de erro */
+        }
+    </style>
 </head>
 
 <body>
@@ -33,40 +42,41 @@
 
                 <div>
                     <label>Nome: </label> 
-                    <input th:field="*{nome}" />
+                    <input th:field="*{nome}" class="${#fields.hasErrors('nome')} ? 'campo-invalido' : ''" />
+                    <span th:if="${#fields.hasErrors('nome')}" class="erro-validacao" th:errors="*{nome}"></span>
                 </div>
 
                 <div>
                     <label>Telefone: </label> 
-                    <input th:field="*{telefone}"/>
+                    <input th:field="*{telefone}" class="${#fields.hasErrors('telefone')} ? 'campo-invalido' : ''" />
+                    <span th:if="${#fields.hasErrors('telefone')}" class="erro-validacao" th:errors="*{telefone}"></span>
                 </div>
 
                 <div>
                     <label>Unidade:</label>
-                    <input th:field="*{unidade}"/>
+                    <input th:field="*{unidade}" class="${#fields.hasErrors('unidade')} ? 'campo-invalido' : ''" />
+                    <span th:if="${#fields.hasErrors('unidade')}" class="erro-validacao" th:errors="*{unidade}"></span>
                 </div>
 
                 <div>
                     <label>Setor:</label>
-                    <input th:field="*{setor}"/>
+                    <input th:field="*{setor}" class="${#fields.hasErrors('setor')} ? 'campo-invalido' : ''" />
+                    <span th:if="${#fields.hasErrors('setor')}" class="erro-validacao" th:errors="*{setor}"></span>
                 </div>
 
                 <div>
                     <label>Andar:</label>
-                    <input th:field="*{andar}"/>
+                    <input th:field="*{andar}" class="${#fields.hasErrors('andar')} ? 'campo-invalido' : ''" />
+                    <span th:if="${#fields.hasErrors('andar')}" class="erro-validacao" th:errors="*{andar}"></span>
                 </div>
 
                 <div>
                     <label>Paciente:</label>
-                    <select th:field="*{paciente}" onchange="showHidePacienteNome(this)">
+                    <select th:field="*{paciente}" class="${#fields.hasErrors('paciente')} ? 'campo-invalido' : ''">
                         <option value="Sim">Sim</option>
                         <option value="Não">Não</option>
                     </select>
-                </div>
-
-                <div id="nomePaciente" class="hidden">
-                    <label for="pacienteNome">Digite o nome do paciente:</label>
-                    <input type="text" th:field="*{paciente}" id="pacienteNome" />
+                    <span th:if="${#fields.hasErrors('paciente')}" class="erro-validacao" th:errors="*{paciente}"></span>
                 </div>
 
                 <div>
@@ -88,18 +98,6 @@
             const form = document.querySelector('form');
             form.reset();
         });
-
-        function showHidePacienteNome(select) {
-            const pacienteNomeDiv = document.getElementById('nomePaciente');
-            if (select.value === 'Não') {
-                pacienteNomeDiv.classList.remove('hidden');
-            } else {
-                pacienteNomeDiv.classList.add('hidden');
-            }
-        }
-
-        // Chamada inicial para verificar estado ao carregar a página
-        showHidePacienteNome(document.querySelector('select[name="paciente"]'));
     </script>
 </body>
 </html>
