@@ -17,6 +17,8 @@ public class Pessoa {
     private String unidade;
     private String setor;
     private String andar;
+    
+    
     private String paciente;
     private String horaEntrada;
     private String horaSaida;
